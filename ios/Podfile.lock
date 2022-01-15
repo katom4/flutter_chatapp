@@ -125,6 +125,8 @@ PODS:
   - PromisesObjC (2.0.0)
   - shared_preferences_ios (0.0.1):
     - Flutter
+  - twitter_login (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -134,6 +136,7 @@ DEPENDENCIES:
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.9.0`)
   - Flutter (from `Flutter`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+  - twitter_login (from `.symlinks/plugins/twitter_login/ios`)
 
 SPEC REPOS:
   trunk:
@@ -166,6 +169,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
+  twitter_login:
+    :path: ".symlinks/plugins/twitter_login/ios"
 
 CHECKOUT OPTIONS:
   FirebaseFirestore:
@@ -192,6 +197,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
+  twitter_login: 2794db69b7640681171b17b3c2c84ad9dfb4a57f
 
 PODFILE CHECKSUM: 9ef44dd4a00ce81c1e85538aa00f494c161647ef
 
