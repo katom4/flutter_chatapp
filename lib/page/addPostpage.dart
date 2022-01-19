@@ -41,6 +41,7 @@ class AddPostPage extends ConsumerWidget{
                           'uid':uid,
                           'date':date,
                           'text':messageText,
+                          'count':0
                         });
                       ref.watch(unamesProvider.state).state=[];
                       ref.watch(daProvider.state).state=[];

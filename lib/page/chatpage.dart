@@ -44,6 +44,7 @@ class ChatPage extends ConsumerWidget{
                           if(b.connectionState==ConnectionState.done||b.connectionState==ConnectionState.waiting){
                             return GestureDetector(
                             child:Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Container(
                                   alignment: Alignment.center,
@@ -63,7 +64,15 @@ class ChatPage extends ConsumerWidget{
                                               Text(getConversionDate(ref.watch(daProvider.state).state[i]["date"])),
                                             ],
                                           ),
-                                          Text(ref.watch(daProvider.state).state[i]["text"])
+                                          Text(ref.watch(daProvider.state).state[i]["text"]),
+                                          SizedBox(height: 8,),
+                                          Row(
+                                            children: [
+                                              Icon(Icons.chat_bubble,size:15),
+                                              SizedBox(width:5),
+                                              Text(ref.watch(daProvider.state).state[i]["count"].toString()=="0" ? "" : ref.watch(daProvider.state).state[i]["count"].toString()),
+                                            ],
+                                          ),
                                         ]
                                       ),
                                     ],
@@ -79,44 +88,8 @@ class ChatPage extends ConsumerWidget{
                                       ),
                                     ),
                                   ),
-                                  child:SizedBox(height:20),
+                                  child:SizedBox(height:10),
                                 ),
-                                /*Container(
-                                  alignment: Alignment.centerLeft,
-                                  width:double.infinity,
-                                  padding:EdgeInsets.only(bottom:20),
-                                  decoration: BoxDecoration(
-                                    border:const Border(
-                                      bottom:const BorderSide(
-                                        color:Colors.black12,
-                                        width:1
-                                      ),
-                                    ),
-                                  ),
-                                  child:ListTile(
-                                    leading: Icon(Icons.people),
-                                    title:Column(
-                                      children: <Widget>[
-                                        Container(
-                                          alignment: Alignment.center,
-                                          width:double.infinity,
-                                          padding:EdgeInsets.only(top:5),
-                                          child:Row(
-                                            children: [
-                                              Text(ref.watch(unamesProvider.state).state[i]+"　　",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),),
-                                              Text(getConversionDate(ref.watch(daProvider.state).state[i]["date"])),
-                                            ],
-                                          )
-                                        ),
-                                        Container(
-                                          alignment: Alignment.centerLeft,
-                                          child:Text(ref.watch(daProvider.state).state[i]["text"]),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),*/
                               ],
                             ),
                             onTap: ()async{
@@ -126,8 +99,7 @@ class ChatPage extends ConsumerWidget{
                                           .collection('groups')
                                           .doc(ref.watch(groupidProvider.state).state)
                                           .collection('chats')
-                                          .doc(ref.watch(replypathProvider.state).state)
-                                          .collection('reply');
+                                          .doc(ref.watch(replypathProvider.state).state);
                               Map<String,dynamic> data={
                                 'text':ref.watch(daProvider.state).state[i]['text'],
                                 'date':ref.watch(daProvider.state).state[i]['date'],

@@ -31,6 +31,7 @@ final replysfutureProvider = StateProvider.autoDispose.family<Future<List>,dynam
   if(ref.watch(replyrouteProvider.state).state!=reference||ref.watch(replyDateProvider.state).state=="")return [];
   List<dynamic> datalist =[];
     await reference
+                .collection('reply')
                 .orderBy('date',descending: true)
                 .limit(20)
                 .startAfter([ref.watch(replyDateProvider.state).state])
@@ -54,7 +55,6 @@ class chatViewPage extends ConsumerWidget{
   
   @override
   Widget build(BuildContext context, WidgetRef ref){
-
     return Scaffold(
       body:Center(
         child: Column(
@@ -63,12 +63,40 @@ class chatViewPage extends ConsumerWidget{
             Container(
               child:Column(
                 children: <Widget>[
-                  Text(data['text']),
                   Row(
+                    children: [
+                      SizedBox(width:15),
+                      Icon(Icons.people,size:55),
+                      SizedBox(width:5),
+                      Text(
+                        data['username'],
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children:<Widget>[
+                      SizedBox(width:30),
+                      Text(
+                        data['text'],
+                        style: TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                    ]
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(getConversionDate(data['date'])),
-                      ElevatedButton(
-                        child: Text("リプ"),
+                      IconButton(
+                        icon: Icon(
+                          Icons.chat_bubble,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
                         onPressed: ()async{
                           await Navigator.of(context).push(
                             MaterialPageRoute(builder: (context){
@@ -118,7 +146,6 @@ class chatViewPage extends ConsumerWidget{
                             child:Column(
                               children: <Widget>[
                                 Container(
-                                  alignment: Alignment.center,
                                   padding:EdgeInsets.only(left:10,top:5),
                                   child:Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,6 +163,14 @@ class chatViewPage extends ConsumerWidget{
                                             ],
                                           ),
                                           Text(ref.watch(replysProvider.state).state[i]["text"]),
+                                          SizedBox(height: 8,),
+                                          Row(
+                                            children: [
+                                              Icon(Icons.chat_bubble,size:15),
+                                              SizedBox(width:5),
+                                              Text(ref.watch(replysProvider.state).state[i]["count"].toString()=='0' ? "" : ref.watch(replysProvider.state).state[i]["count"].toString()),
+                                            ],
+                                          ),
                                         ]
                                       ),
                                     ],
@@ -151,7 +186,7 @@ class chatViewPage extends ConsumerWidget{
                                       ),
                                     ),
                                   ),
-                                  child:SizedBox(height:20),
+                                  child:SizedBox(height:10),
                                 ),
                                 /*Container(
                                   alignment: Alignment.centerLeft,
@@ -192,9 +227,10 @@ class chatViewPage extends ConsumerWidget{
                               ],
                             ),
                             onTap: ()async{
-                              ref.watch(replyrouteProvider.state).state=await data['future']
-                                          .doc(ref.watch(replysProvider.state).state[i].id)
-                                          .collection('reply');
+                              
+                              ref.watch(replyrouteProvider.state).state=data['future']
+                                          .collection('reply')
+                                          .doc(ref.watch(replysProvider.state).state[i].id);
                               //data['path']=await ref.watch(replysProvider.state).state[i].id;
                               
                               Map<String,dynamic> nextdata={
@@ -204,8 +240,8 @@ class chatViewPage extends ConsumerWidget{
                                 'username':ref.watch(replysunamesProvider.state).state[i],
                                 'path':ref.watch(replysProvider.state).state[i].id,
                                 'future':data['future']
+                                .collection('reply')
                                           .doc(ref.watch(replysProvider.state).state[i].id)
-                                          .collection('reply')
                               };
                               
                               ref.watch(replyPageProvider.state).state=0;

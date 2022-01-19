@@ -34,11 +34,19 @@ class AddPostreplyPage extends ConsumerWidget{
                       final date=
                       DateTime.now().toLocal().toIso8601String();
                       final uid=user.uid;
+                      final snapshots =  await ref.watch(replyrouteProvider.state).state.get();
+                      int inc=snapshots.data()['count']+1;
                       await ref.watch(replyrouteProvider.state).state
+                        .update({
+                          'count':inc
+                        });
+                      await ref.watch(replyrouteProvider.state).state
+                        .collection('reply')
                         .add({
                           'uid':uid,
                           'date':date,
                           'text':messageText,
+                          'count':0
                         });
                       Navigator.of(context).pop();
                     }

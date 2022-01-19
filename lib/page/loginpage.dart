@@ -52,7 +52,6 @@ class LoginPage extends ConsumerWidget{
                         email: email,
                         password: password
                         );
-                        
                         int count;
                         int n=0;
                         String gid="";
@@ -61,8 +60,12 @@ class LoginPage extends ConsumerWidget{
                         .orderBy('date', descending: true)
                         .limit(1)
                         .snapshots();
-                        final a=snapshots.take(1);//これやんないとなんかfor文でずっと繰り返される
-                        await for (var snapshot in a){
+                        final aa=await FirebaseFirestore.instance
+                        .collection('groups')
+                        .orderBy('date', descending: true)
+                        .limit(1)
+                        .get();
+                        final snapshot=aa;
                           count = snapshot.docs[0].data()['count'];
                           String id=snapshot.docs[0].id;
                           String pass="groups/"+id+"/users";
@@ -103,8 +106,6 @@ class LoginPage extends ConsumerWidget{
                               gid=id;
                               groupid=gid;
                           }
-                          break;
-                        }
                         await FirebaseFirestore.instance
                           .collection('users')
                           .doc(result.user!.uid)
@@ -239,7 +240,7 @@ class TwitterLoginPage extends ConsumerWidget{
                           print('====== Login error ======');
                           break;
                       }
-                      /*final FirebaseAuth auth=FirebaseAuth.instance;
+                      final FirebaseAuth auth=FirebaseAuth.instance;
                       final result = await auth.createUserWithEmailAndPassword(
                         email: email,
                         password: password
@@ -253,6 +254,7 @@ class TwitterLoginPage extends ConsumerWidget{
                         .orderBy('date', descending: true)
                         .limit(1)
                         .snapshots();
+                        
                         final a=snapshots.take(1);//これやんないとなんかfor文でずっと繰り返される
                         await for (var snapshot in a){
                           count = snapshot.docs[0].data()['count'];
@@ -314,7 +316,7 @@ class TwitterLoginPage extends ConsumerWidget{
                         MaterialPageRoute(builder: (context) {
                           return ChatPage();
                         }),
-                      );*/
+                      );
                     }catch(e){
                       ref.read(infoTextProvider.state).state =
                       '失敗しました：${e.toString()}';
