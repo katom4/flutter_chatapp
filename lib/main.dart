@@ -34,9 +34,8 @@ class MyApp extends StatelessWidget {
 class loginCheck extends ConsumerWidget{
   @override
   Widget build(BuildContext context,WidgetRef ref){
-    if(ref.watch(userProvider.state).state==null){
-        
-      return LoginPage();
+    if(ref.watch(userProvider.state).state==null||ref.watch(userProvider.state).state?.emailVerified==false){
+      return RegisterPage();
     }
     else{
       if(ref.watch(groupidProvider.state).state=="")getu(ref);

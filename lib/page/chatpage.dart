@@ -167,7 +167,7 @@ class ChatPage extends ConsumerWidget{
                     ref.watch(groupidProvider.state).state="";
                     await Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) {
-                      return LoginPage();
+                      return RegisterPage();
                     }),
                   );
                 },
