@@ -27,6 +27,10 @@ final replyrouteProvider=StateProvider((ref){
   return a;
 });
 
+final popupProvider=StateProvider((ref){
+  return false;
+});
+
 final replysfutureProvider = StateProvider.autoDispose.family<Future<List>,dynamic>((ref,reference)async{
   if(ref.watch(replyrouteProvider.state).state!=reference||ref.watch(replyDateProvider.state).state=="")return [];
   List<dynamic> datalist =[];
@@ -74,6 +78,35 @@ class chatViewPage extends ConsumerWidget{
                           fontSize: 18,
                         ),
                       ),
+                      Spacer(),
+                      data['uid']==ref.watch(userProvider.state).state?.uid ? 
+                      Column(
+                        children: [
+                          IconButton(
+                            icon:new Icon(Icons.more_vert),
+                            onPressed: ()async{
+                              ref.watch(popupProvider.state).state=!ref.watch(popupProvider.state).state;
+                            },
+                          ),
+                          ref.watch(popupProvider.state).state ?
+                          ElevatedButton(
+                            onPressed: ()async{
+                              await ref.watch(replyrouteProvider.state).state.delete();
+                              ref.watch(unamesProvider.state).state=[];
+                              ref.watch(daProvider.state).state=[];
+                              ref.watch(lastdateProvider.state).state=[DateTime.now().toLocal().toIso8601String()];
+                              ref.watch(replyrouteProvider.state).state="";
+                              ref.watch(replysProvider.state).state=[];
+                              ref.watch(replysunamesProvider.state).state=[];
+                              ref.watch(replyDateProvider.state).state=[""];
+                              ref.watch(replyPageProvider.state).state=0;
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("削除"),
+                            ):Text("")
+                        ],
+                      ) :Text(""),
+                      SizedBox(width:10)
                     ],
                   ),
                   Row(
@@ -173,6 +206,7 @@ class chatViewPage extends ConsumerWidget{
                                           ),
                                         ]
                                       ),
+                                      
                                     ],
                                   )
                                 ),

@@ -33,7 +33,7 @@ Future<String> getuname(String uid) async{
 
 }
 String getConversionDate(String d){
-  if(d.length!=26)return "err";
+  if(d.length>26)return "err";
   String month=d.substring(5,7);
   String date=d.substring(8,10);
   String hour=d.substring(11,13);

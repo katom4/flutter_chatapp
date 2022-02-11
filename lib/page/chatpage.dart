@@ -46,37 +46,35 @@ class ChatPage extends ConsumerWidget{
                             child:Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Container(
-                                  alignment: Alignment.center,
-                                  padding:EdgeInsets.only(left:10,top:5),
-                                  child:Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(Icons.people,size:45),
-                                      SizedBox(width:10),
-                                      Column(
+                                Row(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      padding:EdgeInsets.only(left:10,top:5),
+                                      child:Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        children:[
-                                          Row(
-                                            children: [
-                                              Text(ref.watch(unamesProvider.state).state[i]+"　　",
-                                                      style: TextStyle(fontWeight: FontWeight.bold),),
-                                              Text(getConversionDate(ref.watch(daProvider.state).state[i]["date"])),
-                                            ],
+                                        children: [
+                                          Icon(Icons.people,size:45),
+                                          SizedBox(width:10),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children:[
+                                              Row(
+                                                children: [
+                                                  Text(ref.watch(unamesProvider.state).state[i]+"　　",
+                                                          style: TextStyle(fontWeight: FontWeight.bold),),
+                                                  Text(getConversionDate(ref.watch(daProvider.state).state[i]["date"])),
+                                                ],
+                                              ),
+                                              Text(ref.watch(daProvider.state).state[i]["text"]),
+                                              SizedBox(height: 8,),
+                                            ]
                                           ),
-                                          Text(ref.watch(daProvider.state).state[i]["text"]),
-                                          SizedBox(height: 8,),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.chat_bubble,size:15),
-                                              SizedBox(width:5),
-                                              Text(ref.watch(daProvider.state).state[i]["count"].toString()=="0" ? "" : ref.watch(daProvider.state).state[i]["count"].toString()),
-                                            ],
-                                          ),
-                                        ]
+                                        ],
                                       ),
-                                    ],
-                                  )
+                                    ),
+                                    
+                                  ],
                                 ),
                                 Container(
                                   width:double.infinity,
