@@ -3,6 +3,7 @@ import 'profilepage.dart';
 import 'loginpage.dart';
 import 'addPostPage.dart';
 import 'chatViewpage.dart';
+import 'memberPage.dart';
 
 class ChatPage extends ConsumerWidget{
   ScrollController _controller=new ScrollController();
@@ -66,8 +67,18 @@ class ChatPage extends ConsumerWidget{
                                                   Text(getConversionDate(ref.watch(daProvider.state).state[i]["date"])),
                                                 ],
                                               ),
-                                              Text(ref.watch(daProvider.state).state[i]["text"]),
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width*8/10,
+                                                child:Text(ref.watch(daProvider.state).state[i]["text"]),
+                                              ),
                                               SizedBox(height: 8,),
+                                                Row(
+                                                  children: [
+                                                    Icon(Icons.chat_bubble,size:15),
+                                                    SizedBox(width:5),
+                                                    Text(ref.watch(daProvider.state).state[i]["count"].toString()=='0' ? "" : ref.watch(daProvider.state).state[i]["count"].toString()),
+                                                  ],
+                                                ),
                                             ]
                                           ),
                                         ],
@@ -151,6 +162,17 @@ class ChatPage extends ConsumerWidget{
                 await Navigator.of(context).push(
                   MaterialPageRoute(builder: (context){
                     return ProfilePage();
+                  })
+                );
+              },
+            ),
+            ListTile(
+              title:Text("メンバー一覧"),
+              onTap: ()async{
+                Navigator.of(context).pop();
+                await Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context){
+                    return MemberPage();
                   })
                 );
               },

@@ -91,7 +91,7 @@ class chatViewPage extends ConsumerWidget{
                           ref.watch(popupProvider.state).state ?
                           ElevatedButton(
                             onPressed: ()async{
-                              await ref.watch(replyrouteProvider.state).state.delete();
+                              await ref.watch(replyrouteProvider.state).state.delete(); 
                               ref.watch(unamesProvider.state).state=[];
                               ref.watch(daProvider.state).state=[];
                               ref.watch(lastdateProvider.state).state=[DateTime.now().toLocal().toIso8601String()];
@@ -110,12 +110,15 @@ class chatViewPage extends ConsumerWidget{
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children:<Widget>[
-                      SizedBox(width:30),
-                      Text(
-                        data['text'],
-                        style: TextStyle(
-                          fontSize: 30,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*9/10,
+                        child:Text(
+                          data['text'],
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),
                         ),
                       ),
                     ]
@@ -195,7 +198,10 @@ class chatViewPage extends ConsumerWidget{
                                               Text(getConversionDate(ref.watch(replysProvider.state).state[i]["date"])),
                                             ],
                                           ),
-                                          Text(ref.watch(replysProvider.state).state[i]["text"]),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width*8/10,
+                                            child:Text(ref.watch(replysProvider.state).state[i]["text"]),
+                                          ),
                                           SizedBox(height: 8,),
                                           Row(
                                             children: [
